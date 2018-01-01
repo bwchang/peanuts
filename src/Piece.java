@@ -16,8 +16,7 @@ public enum Piece {
     TWELVE(12, 170, 300),
     THIRTEEN(13, 238, 300),
     FOURTEEN(14, 306, 300),
-    FIFTEEN(15, 374, 300)
-    ;
+    FIFTEEN(15, 374, 300);
 
     static final int SIZE = 24;
     int id;
