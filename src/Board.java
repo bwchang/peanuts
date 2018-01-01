@@ -7,6 +7,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 
 public class Board extends JPanel {
 
@@ -36,6 +37,7 @@ public class Board extends JPanel {
             selected.remove(p);
         } else if (selected.size() < 3) {
             selected.add(p);
+            selected.sort(new PieceComparator());
         }
     }
 
@@ -53,15 +55,9 @@ public class Board extends JPanel {
         } else if (pieces.size() == 1) {
             return true;
         } else if (pieces.size() == 2) {
-            Piece first = pieces.get(0);
-            Piece second = pieces.get(1);
-            if (first.id < second.id) {
-                return areTwoConnected(first, second);
-            } else {
-                return areTwoConnected(second, first);
-            }
+            return areTwoConnected(pieces.get(0), pieces.get(1));
         } else {
-            return false;
+            return areThreeConnected(pieces.get(0), pieces.get(1), pieces.get(2));
         }
     }
 
@@ -81,6 +77,15 @@ public class Board extends JPanel {
     }
 
     private boolean areThreeConnected(Piece first, Piece second, Piece third) {
+        int firstID = first.id;
+        int secondID = second.id;
+        int thirdID = third.id;
+        if (!(firstID == 1 || firstID == 3 || firstID == 6 || firstID == 10 || firstID == 15 ||
+                firstID == 2 || firstID == 5 || firstID == 9 || firstID == 14)) {
+            if (secondID - firstID == 1 && thirdID - secondID == 1) {
+                return true;
+            }
+        }
         return false;
     }
 
@@ -125,6 +130,14 @@ public class Board extends JPanel {
         public void actionPerformed(ActionEvent actionEvt) {
             removePieces();
             repaint();
+        }
+    }
+
+    class PieceComparator implements Comparator<Piece> {
+
+        @Override
+        public int compare(Piece o1, Piece o2) {
+            return o1.id - o2.id;
         }
     }
 }
