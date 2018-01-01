@@ -10,14 +10,16 @@ import java.awt.event.MouseListener;
 public class Board extends JPanel {
 
     public Board() {
-        addMouseListener(new BoardMouseListener());
+        addMouseListener(new BoardMouseListener(this));
     }
 
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
 
         g.setColor(Color.BLACK);
-        g.fillRect(40, 40, 40, 40);
 
+        for (Piece p : Piece.values()) {
+            g.fillRect(p.x, p.y, Piece.SIZE, Piece.SIZE);
+        }
     }
 }
