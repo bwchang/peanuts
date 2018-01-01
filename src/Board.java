@@ -4,23 +4,20 @@
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 
 public class Board extends JPanel {
 
     public Board() {
-
+        addMouseListener(new BoardMouseListener());
     }
-
-//    public void drawBoard() {
-//        repaint();
-//    }
 
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
 
-        g.setColor(Color.BLUE);
-        g.fillRect(100, 100, 100, 100);
+        g.setColor(Color.BLACK);
+        g.fillRect(40, 40, 40, 40);
 
-        System.out.println("hello");
     }
 }

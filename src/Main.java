@@ -3,18 +3,21 @@
  */
 
 import javax.swing.*;
+import java.awt.*;
+import java.awt.event.*;
 
 public class Main {
+    public static final int FRAMEWIDTH = 500;
+    public static final int FRAMEHEIGHT = 500;
+
     public static void main(String[] args) {
-        JFrame f=new JFrame();
-        f.setSize(400,500);//400 width and 500 height
-        f.setLayout(null);//using no layout managers
-
-        f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
         Board b = new Board();
-        f.add(b);
 
-        f.setVisible(true);//making the frame visible
+        JFrame f=new JFrame();
+        f.setSize(FRAMEWIDTH,FRAMEHEIGHT);
+        f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        f.add(b);
+        f.setVisible(true);
+
     }
 }
