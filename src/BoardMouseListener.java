@@ -27,7 +27,6 @@ public class BoardMouseListener implements MouseListener {
             }
         }
 
-//        b.takeTurn();
         b.repaint();
     }
 

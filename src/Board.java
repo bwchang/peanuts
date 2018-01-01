@@ -27,16 +27,61 @@ public class Board extends JPanel {
         return onBoard;
     }
 
-    public void takeTurn() {
+    private void takeTurn() {
         whoseTurn = 1 - whoseTurn;
     }
 
     public void toggleSelect(Piece p) {
         if (selected.contains(p)) {
             selected.remove(p);
-        } else {
+        } else if (selected.size() < 3) {
             selected.add(p);
         }
+    }
+
+    private void removePieces() {
+        if (isConnected(selected)) {
+            onBoard.removeAll(selected);
+            selected.clear();
+            takeTurn();
+        }
+    }
+
+    private boolean isConnected(ArrayList<Piece> pieces) {
+        if (pieces.size() == 0) {
+            return false;
+        } else if (pieces.size() == 1) {
+            return true;
+        } else if (pieces.size() == 2) {
+            Piece first = pieces.get(0);
+            Piece second = pieces.get(1);
+            if (first.id < second.id) {
+                return areTwoConnected(first, second);
+            } else {
+                return areTwoConnected(second, first);
+            }
+        } else {
+            return false;
+        }
+    }
+
+    private boolean areTwoConnected(Piece first, Piece second) {
+        int firstID = first.id;
+        int secondID = second.id;
+        if (!(firstID == 1 || firstID == 3 || firstID == 6 || firstID == 10 || firstID == 15)) {
+            if (secondID - firstID == 1) {
+                return true;
+            }
+        }
+        int level = first.level;
+        if (secondID - firstID == level || secondID - firstID == level + 1) {
+            return true;
+        }
+        return false;
+    }
+
+    private boolean areThreeConnected(Piece first, Piece second, Piece third) {
+        return false;
     }
 
     public void paintComponent(Graphics g) {
@@ -78,7 +123,8 @@ public class Board extends JPanel {
 
         @Override
         public void actionPerformed(ActionEvent actionEvt) {
-            System.out.println(actionEvt.getActionCommand() + " pressed");
+            removePieces();
+            repaint();
         }
     }
 }
