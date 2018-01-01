@@ -5,19 +5,38 @@
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class Board extends JPanel {
 
     int whoseTurn;
+    ArrayList<Piece> onBoard;
+    ArrayList<Piece> selected;
 
     public Board() {
         this.whoseTurn = 0;
-        addMouseListener(new BoardListener(this));
+        onBoard = new ArrayList<>();
+        onBoard.addAll(Arrays.asList(Piece.values()));
+        selected = new ArrayList<>();
+        addMouseListener(new BoardMouseListener(this));
         setKeyBindings();
+    }
+
+    public ArrayList<Piece> pieces() {
+        return onBoard;
     }
 
     public void takeTurn() {
         whoseTurn = 1 - whoseTurn;
+    }
+
+    public void toggleSelect(Piece p) {
+        if (selected.contains(p)) {
+            selected.remove(p);
+        } else {
+            selected.add(p);
+        }
     }
 
     public void paintComponent(Graphics g) {
@@ -29,7 +48,13 @@ public class Board extends JPanel {
             g.setColor(Color.RED);
         }
 
-        for (Piece p : Piece.values()) {
+        for (Piece p : onBoard) {
+            g.fillRect(p.x, p.y, Piece.SIZE, Piece.SIZE);
+        }
+
+        g.setColor(Color.BLUE);
+
+        for (Piece p : selected) {
             g.fillRect(p.x, p.y, Piece.SIZE, Piece.SIZE);
         }
     }

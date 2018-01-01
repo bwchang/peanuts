@@ -19,6 +19,7 @@ public enum Piece {
     FIFTEEN(15, 374, 300);
 
     static final int SIZE = 24;
+    static final int MARGIN = 2;
     int id;
     int x;
     int y;
@@ -27,5 +28,15 @@ public enum Piece {
         this.id = id;
         this.x = x;
         this.y = y;
+    }
+
+    public boolean inBounds(int mouseX, int mouseY) {
+        if (mouseX < x - MARGIN || mouseX > x + SIZE + MARGIN) {
+            return false;
+        }
+        if (mouseY < y - MARGIN || mouseY > y + SIZE + MARGIN) {
+            return false;
+        }
+        return true;
     }
 }

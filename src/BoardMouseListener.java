@@ -6,13 +6,13 @@ import java.awt.event.MouseListener;
 /**
  * Created by bettychang on 12/31/17.
  */
-public class BoardListener implements MouseListener {
+public class BoardMouseListener implements MouseListener {
 
     private Board b;
 
-    public BoardListener(Board _b) {
+    public BoardMouseListener(Board b) {
         super();
-        b = _b;
+        this.b = b;
     }
 
     @Override
@@ -20,7 +20,14 @@ public class BoardListener implements MouseListener {
         int x = e.getX();
         int y = e.getY();
 
-        b.takeTurn();
+        for (Piece p : b.pieces()) {
+            if (p.inBounds(x, y)) {
+                b.toggleSelect(p);
+                break;
+            }
+        }
+
+//        b.takeTurn();
         b.repaint();
     }
 
