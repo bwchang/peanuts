@@ -86,6 +86,14 @@ public class Board extends JPanel {
                 return true;
             }
         }
+        if (firstID <= 6) {
+            int level = first.level;
+            if (secondID - firstID == level) {
+                return thirdID - secondID == level + 1;
+            } else if (secondID - firstID == level + 1) {
+                return thirdID - secondID == level + 2;
+            }
+        }
         return false;
     }
 
